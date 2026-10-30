@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b10">
+  <meta name="description" content="Explore Tesla vehicles, compare specifications and request a purchase or reservation through TeslaWorld.">
+  <title>TeslaWorld | Electric, reimagined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-brand"><span class="brand-mark">T</span><span>TESLA<span class="brand-light">WORLD</span></span></div>
+    <div class="auth-card">
+      <div class="eyebrow">THE ELECTRIC COLLECTION</div>
+      <h1>Your next drive<br><span>starts here.</span></h1>
+      <p class="muted">Create an account or sign in to explore our Tesla vehicle catalogue.</p>
+      <div class="auth-tabs">
+        <button class="tab active" data-auth-tab="login">Sign in</button>
+        <button class="tab" data-auth-tab="signup">Create account</button>
+      </div>
+      <form id="authForm">
+        <label id="nameWrap" class="hidden">Full name<input id="fullName" autocomplete="name" placeholder="Your name"></label>
+        <label>Email address<input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+        <label>Password<input id="password" type="password" required minlength="8" autocomplete="current-password" placeholder="At least 8 characters"></label>
+        <button class="button primary full" type="submit" id="authSubmit">Sign in</button>
+        <p id="authMessage" class="form-message" role="status"></p>
+      </form>
+      <p class="fine-print">TeslaWorld is an independent vehicle information and enquiry platform and is not affiliated with Tesla, Inc.</p>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <header class="topbar">
+      <a class="brand" href="#" data-view="home"><span class="brand-mark">T</span><span>TESLA<span class="brand-light">WORLD</span></span></a>
+      <nav class="desktop-nav">
+        <button data-view="home" class="nav-link active">Discover</button>
+        <button data-view="catalogue" class="nav-link">Vehicles</button>
+        <button data-view="orders" class="nav-link">My activity</button>
+      </nav>
+      <div class="top-actions">
+        <button id="cartOpen" class="icon-button" aria-label="Open cart">Bag <span id="cartCount" class="count">0</span></button>
+        <button id="accountButton" class="account-button">Account</button>
+        <button id="signOut" class="text-button">Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="homeView" class="view">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="live-dot"></span> THE FUTURE IS ELECTRIC</div>
+            <h1>Drive beyond<br><span>the expected.</span></h1>
+            <p>Explore the Tesla lineup. Discover the details, compare the drive and take the next step with confidence.</p>
+            <div class="hero-actions"><button class="button primary" data-view="catalogue">Explore vehicles <span>↗</span></button><a class="button ghost" href="#how-it-works">How it works</a></div>
+            <div class="hero-note">Independent vehicle showcase · Prices and availability require confirmation</div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-orbit"></div>
+            <img src="https://images.unsplash.com/photo-1560958089-b8a1929kea0?auto=format&fit=crop&w=1400&q=85" alt="Electric car on a modern road" onerror="this.style.display='none'">
+            <div class="hero-caption"><span>01 / ELECTRIC COLLECTION</span><b>Designed for tomorrow.</b></div>
+          </div>
+        </div>
+        <section class="section intro-row">
+          <div><div class="eyebrow">THE LINEUP</div><h2>Find your kind<br>of <span>electric.</span></h2></div>
+          <p>From everyday versatility to all-electric performance, explore model information and key features in one place.</p>
+        </section>
+        <div id="featuredGrid" class="vehicle-grid"></div>
+        <section id="how-it-works" class="how-section">
+          <div class="eyebrow">A CLEARER WAY TO EXPLORE</div><h2>From discovery<br>to your next step.</h2>
+          <div class="steps">
+            <article><span>01</span><h3>Explore</h3><p>Browse models, images, key specifications and indicative market information.</p></article>
+            <article><span>02</span><h3>Compare</h3><p>Review range, performance, seating, charging and equipment details.</p></article>
+            <article><span>03</span><h3>Enquire or reserve</h3><p>Submit your interest. Availability, final price, sourcing and delivery are confirmed before payment.</p></article>
+          </div>
+        </section>
+        <div class="disclaimer">Vehicle specifications, range, performance, pricing, warranty and equipment may vary by model year, trim, region and configuration. Confirm all details with the vehicle provider before purchase.</div>
+      </section>
+
+      <section id="catalogueView" class="view hidden">
+        <div class="page-heading"><div class="eyebrow">THE COLLECTION</div><h1>Explore <span>vehicles.</span></h1><p>Browse the current Tesla model families. Select a vehicle to view its information.</p></div>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Search models..." aria-label="Search vehicles">
+          <select id="typeFilter" aria-label="Filter vehicle type"><option value="all">All vehicle types</option><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Truck">Truck</option><option value="Roadster">Roadster</option></select>
+        </div>
+        <div id="catalogueGrid" class="vehicle-grid"></div>
+      </section>
+
+      <section id="detailView" class="view hidden">
+        <button class="back-button" data-view="catalogue">← Back to vehicles</button>
+        <div id="vehicleDetail"></div>
+      </section>
+
+      <section id="ordersView" class="view hidden">
+        <div class="page-heading"><div class="eyebrow">YOUR ACCOUNT</div><h1>My <span>activity.</span></h1><p>Review your purchase enquiries and reservations.</p></div>
+        <div id="myOrders" class="activity-list"></div>
+      </section>
+
+      <section id="adminView" class="view hidden">
+        <div class="page-heading"><div class="eyebrow">CONTROL CENTRE</div><h1>Admin <span>overview.</span></h1><p>Manage customer activity, reservations, payments and website operations.</p></div>
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-admin-tab="overview">Overview</button>
+          <button class="admin-tab" data-admin-tab="orders">Orders & reservations</button>
+          <button class="admin-tab" data-admin-tab="customers">Customers</button>
+          <button class="admin-tab" data-admin-tab="reviews">Reviews</button>
+          <button class="admin-tab" data-admin-tab="images">Image assets</button>
+          <button class="admin-tab" data-admin-tab="settings">Website settings</button>
+          <button class="admin-tab" data-admin-tab="security">Security</button>
+        </div>
+        <div id="adminContent"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="brand"><span class="brand-mark">T</span><span>TESLA<span class="brand-light">WORLD</span></span></div>
+      <p>Independent Tesla vehicle information and enquiry platform.</p>
+      <div class="footer-links"><a href="#" data-view="catalogue">Vehicles</a><a href="mailto:support@teslaworld.example">Contact</a><button id="footerAdmin" class="text-button">Admin</button></div>
+      <small>© <span id="year"></span> TeslaWorld. Not affiliated with Tesla, Inc. Tesla and related marks belong to their respective owner.</small>
+    </footer>
+  </div>
+
+  <div id="cartDrawer" class="drawer hidden">
+    <div class="drawer-backdrop" id="cartClose"></div><aside class="drawer-panel">
+      <div class="drawer-head"><h2>Your shortlist</h2><button id="cartClose2" class="close-button">×</button></div>
+      <div id="cartItems"></div>
+      <div class="drawer-bottom"><p class="muted">A shortlist is not a confirmed order or reservation.</p><button id="checkoutButton" class="button primary full">Continue to enquiry</button></div>
+    </aside>
+  </div>
+
+  <div id="checkoutModal" class="modal hidden">
+    <div class="modal-backdrop" data-close-modal></div><div class="modal-card">
+      <button class="close-button modal-x" data-close-modal>×</button>
+      <div class="eyebrow">NEXT STEP</div><h2>Submit your <span>interest.</span></h2>
+      <p class="muted">Choose an enquiry type. This submits a request only; no payment is taken here.</p>
+      <form id="checkoutForm">
+        <label>Request type<select id="requestType"><option value="purchase">Purchase enquiry</option><option value="reservation">Reservation enquiry</option></select></label>
+        <label>Preferred country<input id="country" required placeholder="Country of delivery"></label>
+        <label>City<input id="city" required placeholder="City"></label>
+        <label>Message<textarea id="customerNote" rows="3" placeholder="Tell us about your preferred configuration or questions"></textarea></label>
+        <div class="notice">Final price, vehicle availability, seller identity, deposit terms, delivery costs and payment instructions must be verified with you before any payment is requested.</div>
+        <button class="button primary full" type="submit">Submit enquiry</button><p id="checkoutMessage" class="form-message"></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
