@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080b10">
   <meta name="description" content="Explore Tesla vehicles, compare specifications and request a purchase or reservation through TeslaWorld.">
-  <title>TeslaWorld | Electric, reimagined</title>
+  <title>TeslaWorld | Tesla vehicle showcase</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 </head>
 <body>
   <div id="authScreen" class="auth-screen">
-    <div class="auth-brand"><span class="brand-mark">T</span><span>TESLA<span class="brand-light">WORLD</span></span></div>
+    <div class="auth-brand"><span class="brand-mark" aria-label="Tesla T logo"><svg viewBox="0 0 120 90" role="img" aria-hidden="true"><path d="M8 8C34 1 86 1 112 8L105 23C91 18 76 16 66 16V82H54V16C44 16 29 18 15 23Z" fill="currentColor"/></svg></span><span>TESLA<span class="brand-light">WORLD</span></span></div>
     <div class="auth-card">
       <div class="eyebrow">THE ELECTRIC COLLECTION</div>
       <h1>Your next drive<br><span>starts here.</span></h1>
@@ -36,7 +36,7 @@
 
   <div id="app" class="hidden">
     <header class="topbar">
-      <a class="brand" href="#" data-view="home"><span class="brand-mark">T</span><span>TESLA<span class="brand-light">WORLD</span></span></a>
+      <a class="brand" href="#" data-view="home"><span class="brand-mark" aria-label="Tesla T logo"><svg viewBox="0 0 120 90" role="img" aria-hidden="true"><path d="M8 8C34 1 86 1 112 8L105 23C91 18 76 16 66 16V82H54V16C44 16 29 18 15 23Z" fill="currentColor"/></svg></span><span>TESLA<span class="brand-light">WORLD</span></span></a>
       <nav class="desktop-nav">
         <button data-view="home" class="nav-link active">Discover</button>
         <button data-view="catalogue" class="nav-link">Vehicles</button>
@@ -55,7 +55,7 @@
           <div class="hero-copy">
             <div class="eyebrow"><span class="live-dot"></span> THE FUTURE IS ELECTRIC</div>
             <h1>Drive beyond<br><span>the expected.</span></h1>
-            <p>Explore the Tesla lineup. Discover the details, compare the drive and take the next step with confidence.</p>
+            <p>Explore Tesla vehicles, including the redesigned 2026 Roadster reveal. Discover the details, compare the drive and send an enquiry.</p>
             <div class="hero-actions"><button class="button primary" data-view="catalogue">Explore vehicles <span>↗</span></button><a class="button ghost" href="#how-it-works">How it works</a></div>
             <div class="hero-note">Independent vehicle showcase · Prices and availability require confirmation</div>
           </div>
@@ -82,7 +82,7 @@
       </section>
 
       <section id="catalogueView" class="view hidden">
-        <div class="page-heading"><div class="eyebrow">THE COLLECTION</div><h1>Explore <span>vehicles.</span></h1><p>Browse the current Tesla model families. Select a vehicle to view its information.</p></div>
+        <div class="page-heading"><div class="eyebrow">THE COLLECTION</div><h1>Explore <span>vehicles.</span></h1><p>Browse Tesla vehicle models and the newly revealed 2026 Roadster. Select a vehicle to view its information.</p></div>
         <div class="filters">
           <input id="searchInput" type="search" placeholder="Search models..." aria-label="Search vehicles">
           <select id="typeFilter" aria-label="Filter vehicle type"><option value="all">All vehicle types</option><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Truck">Truck</option><option value="Roadster">Roadster</option></select>
@@ -116,8 +116,8 @@
     </main>
 
     <footer class="footer">
-      <div class="brand"><span class="brand-mark">T</span><span>TESLA<span class="brand-light">WORLD</span></span></div>
-      <p>Independent Tesla vehicle information and enquiry platform.</p>
+      <div class="brand"><span class="brand-mark" aria-label="Tesla T logo"><svg viewBox="0 0 120 90" role="img" aria-hidden="true"><path d="M8 8C34 1 86 1 112 8L105 23C91 18 76 16 66 16V82H54V16C44 16 29 18 15 23Z" fill="currentColor"/></svg></span><span>TESLA<span class="brand-light">WORLD</span></span></div>
+      <p>Independent Tesla vehicle information and enquiry platform. Not affiliated with Tesla, Inc.</p>
       <div class="footer-links"><a href="#" data-view="catalogue">Vehicles</a><a href="mailto:support@teslaworld.example">Contact</a><button id="footerAdmin" class="text-button">Admin</button></div>
       <small>© <span id="year"></span> TeslaWorld. Not affiliated with Tesla, Inc. Tesla and related marks belong to their respective owner.</small>
     </footer>
